@@ -26,5 +26,10 @@ if uploaded_file is not None:
     prediction = model.predict(img_array)[0][0]
     label = "Dog" if prediction > 0.5 else "Cat"
     confidence = prediction if prediction > 0.5 else 1 - prediction
+    threshold = 0.98  # set your desired minimum confidence level
 
-    st.markdown(f"### Prediction: **{label}** ({confidence:.2%} confidence)")
+    if confidence >= threshold:
+        st.markdown(f"### Prediction: **{label}** ({confidence:.2%} confidence)")
+    else:
+        st.markdown(f"⚠️ I'm **not confident** this is a cat or a dog. ({confidence:.2%})")
+        st.markdown("Please try uploading a clearer image of a **cat** or **dog**.")
